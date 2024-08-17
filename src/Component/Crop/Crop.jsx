@@ -13,7 +13,7 @@ function Crop({id,crop,categorie}) {
   const cropdec = () =>{
    navigate(`/cropdec/${crop.cropname}`)
   }
-  if(crop.state?.includes(user?.location)==false) return null 
+  if(crop.state?.includes(user?.state)==false) return null 
   return (
     <>
       {crop.category===categorie?

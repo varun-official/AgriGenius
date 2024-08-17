@@ -62,10 +62,9 @@ export default function Login() {
         setError(a.message)
         setErrorDisplay(true)
         navigate("/login");
-
       }
       else{
-
+        await getCrop();
         navigate("/CropInfo");
       }
       

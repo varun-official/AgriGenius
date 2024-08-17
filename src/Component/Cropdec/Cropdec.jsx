@@ -20,32 +20,22 @@ function Cropdec() {
   const[crop,setCrop]= useState(null)
   const[crops,setCrops]= useState()
   const[fatbtn,setFatbtn]=useState("organicFertilizer")
-  const {cropdata} =useUserAuth();
+  const {cropdata,getCrop} =useUserAuth();
   const params = useParams();
   const navigate  = useNavigate()
-
-const ref=collection(db,"crops")
-
-
 
   const handelChange=(btnname)=>{
      setFatbtn(btnname)
   }
-
-
   useEffect(() => {
-
-  //   const data = onSnapshot(ref, (doc) => {
-  //     setCrops(doc.docs)
-  //  });
-
     const setdata=async()=>{
-     await console.log(cropdata);
-    await  cropdata.map((onecrop) => {
-        if (onecrop.data().cropname == params.id) {
+    const data = await getCrop();
+    console.log(data);
+    data.map((onecrop) => {
+        if (onecrop.cropname == params.id) {
             console.log(params.id);
 
-          setCrop(onecrop.data())
+          setCrop(onecrop)
         }
       })
     }

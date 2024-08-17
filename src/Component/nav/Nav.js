@@ -24,6 +24,10 @@ function Nav() {
     await setUser(false);
     navigate("/login");
   };
+  const getCrops = async() =>{
+    await getCrop();
+    navigate("/CropInfo");
+  }
   return (
     <div className="nav">
       <div className="navlogo">
@@ -33,10 +37,7 @@ function Nav() {
       </div>
       <div className="navlink">
         <div
-          onClick={() => {
-            getCrop();
-            navigate("/CropInfo");
-          }}
+          onClick={getCrops}
           className={location.match("/CropInfo") ? "navitemon" : "navitem"}
         >
           <h3>Home</h3> {location.match("/CropInfo") ? <hr /> : <div />}{" "}

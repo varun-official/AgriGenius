@@ -6,14 +6,9 @@ function Listwithheading({name}) {
   const[body,setBody]=useState("");
 
   useEffect(()=>{
-    for(var key in name)
-    {
-      if(name.hasOwnProperty(key))
-      {
-        setHeading(key);
-        setBody(name[key])
-      }
-    }
+    const [value1, value2] = Object.values(name);
+    setHeading(value1);
+    setBody(value2)
   },[name])
 
   console.log("next");

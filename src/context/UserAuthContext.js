@@ -15,7 +15,7 @@ const userAuthContext=createContext();
 
 export function UserAuthContextProvider({children}){
     const[user,setUser]= useState(false);
-    const[cropdata,setCrop]=useState({})
+    const[cropdata,setCrop]=useState([])
     const userCollectionRef = collection(db,"users")
     // const shortTermCollectionRef = collection(db,"Short Term Crops")
     // const longTermCollectionRef = collection(db,"Long Term Crops")
@@ -75,13 +75,15 @@ export function UserAuthContextProvider({children}){
     }
 
     const getCrop=async()=>{
-        const data= await getDocs(cropsCollectionRef)
-        console.log("crops::",data);
-
-         setCrop(data.docs)
-         console.log(data.docs);
-         return data
-
+        try {
+        const res = await axios.get(`${API}/getAllCrop`);
+        setCrop(res.data);
+        console.log("AllCrops::",cropdata);
+        return res.data;
+        } catch (error) {
+         console.log("Error while getting crops::",error.data.message)
+        setCrop([]);
+        }
     }
     const addCropMarket = async(crop) =>{
         await addDoc(cropsMarketCollectionRef,crop)
