@@ -1,17 +1,8 @@
-import { MenuItem, Select } from "@mui/material";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import Nav from "../nav/Nav";
 import NewsCard_sg from "../NewsCard/NewsCard_sg";
-import CustomPagination from "../Pagination/CustomPagination";
-import coconut_banner from "../../assets/image/coconut_banner.jpg";
-import Button from "@mui/material/Button";
 import "./News.scss";
-import CarouselList from "../Carousel/Carousel";
 import { useUserAuth } from "../../context/UserAuthContext";
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "../../config/firebase";
-import Header from '../Header/Header'
 import Weather from "../Weather/Weather";
 import { useNavigate } from "react-router";
 
@@ -23,30 +14,21 @@ const News_sg = () => {
   const [article, setArticle] = useState("");
   const handleChange = (e) => setValue(e.target.value);
   const [page, setPage] = useState(1);
-  const { user, getArticle, getNews } = useUserAuth();
-  const ref = collection(db, "news");
-  const ref1 = collection(db, "article");
+  const {getArticle, getNews } = useUserAuth();
 
   useEffect(() => {
-    // eslint-disable-next-line
     fetchNews();
     fetchArticle();
   }, [page]);
 
   const fetchNews = async () => {
-    // const data = await getNews();
-    // setnewsContent(data.docs)
-    const data = onSnapshot(ref, (doc) => {
-      setnewsContent(doc.docs);
-    });
+    const data = await getNews()
+      setnewsContent(data);
   };
 
   const fetchArticle = async () => {
-    // const data = await getArticle();
-    // setArticle(data.docs)
-    const data = onSnapshot(ref1, (doc) => {
-      setArticle(doc.docs);
-    });
+    const data = await getArticle();
+      setArticle(data);
   };
 
   const menuItems = ["News", "Article"];
@@ -88,14 +70,13 @@ const News_sg = () => {
         </div>
         {value === "News" &&
           newsContent &&
-          newsContent.map((da) => {
-            const c = da.data();
+          newsContent.map((c) => {
             return (
               <NewsCard_sg
                 key={c.title}
                 title={c.title}
                 description={c.description}
-                image_url={c.img_url}
+                image_url={c.imgUrl}
                 link={c.link}
                 content={c.content}
               />
@@ -103,14 +84,13 @@ const News_sg = () => {
           })}
         {value === "Article" &&
           article &&
-          article.map((da) => {
-            const c = da.data();
+          article.map((c) => {
             return (
               <NewsCard_sg
                 key={c.title}
                 title={c.title}
                 description={c.description}
-                image_url={c.img_url}
+                image_url={c.imgUrl}
                 link={c.link}
                 content={c.content}
               />

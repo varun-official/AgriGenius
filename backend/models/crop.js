@@ -18,7 +18,10 @@ const FertilizerSchema = new Schema({
     monthRange: {
       type: String,
       required: true,
-      enum: ['Jan-Feb', 'Mar-Apr', 'May-Jun', 'Jul-Aug', 'Sep-Oct', 'Nov-Dec'], // Example enum, adjust as needed
+      enum: [
+        'Jan-Feb', 'Feb-Mar', 'Mar-Apr', 'Apr-May', 'May-Jun', 'Jun-Jul', 
+        'Jul-Aug', 'Aug-Sep', 'Sep-Oct', 'Oct-Nov', 'Nov-Dec', 'Dec-Jan'
+      ],
     },
     description: {
       type: String,

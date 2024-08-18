@@ -20,7 +20,7 @@ function Cropdec() {
   const[crop,setCrop]= useState(null)
   const[crops,setCrops]= useState()
   const[fatbtn,setFatbtn]=useState("organicFertilizer")
-  const {cropdata,getCrop} =useUserAuth();
+  const {cropdata,getCrop,getCropByname} =useUserAuth();
   const params = useParams();
   const navigate  = useNavigate()
 
@@ -29,15 +29,9 @@ function Cropdec() {
   }
   useEffect(() => {
     const setdata=async()=>{
-    const data = await getCrop();
+    const data = await getCropByname(params.id);
     console.log(data);
-    data.map((onecrop) => {
-        if (onecrop.cropname == params.id) {
-            console.log(params.id);
-
-          setCrop(onecrop)
-        }
-      })
+    setCrop(data)
     }
   setdata()
   }, [params.id])
@@ -206,8 +200,8 @@ function Cropdec() {
           <div className='video'>
             <h2>Related videos</h2>
             <div className='videolist'>
-              {crop.youtubeLinks.map((id)=>(
-                <Video embedId={id}/>
+              {crop.youtubeLinks.map((embedId)=>(
+                <Video embedId={embedId}/>
               ))}
                
             </div>

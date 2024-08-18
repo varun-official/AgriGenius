@@ -78,13 +78,23 @@ export function UserAuthContextProvider({children}){
         try {
         const res = await axios.get(`${API}/getAllCrop`);
         setCrop(res.data);
-        console.log("AllCrops::",cropdata);
         return res.data;
         } catch (error) {
          console.log("Error while getting crops::",error.data.message)
         setCrop([]);
         }
     }
+
+    const getCropByname = async(cropname)=>{
+        try {
+            const res = await axios.get(`${API}/getCrop/${cropname}`);
+            return res.data;
+        } catch (error) {
+            console.log("Error while getting data for cropByname::",error.data.message);
+            return null;
+        }
+    }
+
     const addCropMarket = async(crop) =>{
         await addDoc(cropsMarketCollectionRef,crop)
     }
@@ -135,17 +145,25 @@ export function UserAuthContextProvider({children}){
         await addDoc(newsCollectionRef,news)
     }
     const getNews= async() =>{
-        const data=await getDocs(newsCollectionRef)
-        console.log(data.docs);
-        return data
+        try {
+            const res = await axios.get(`${API}/get/news`);
+            return res.data;
+        } catch (error) {
+            console.log("Error while getting data for getNews::",error.data.message);
+            return [];
+        }
     }
     const addArticle = async(article) =>{
         await addDoc(articleCollectionRef,article)
     }
     const getArticle= async() =>{
-        const data=await getDocs(articleCollectionRef)
-        console.log(data.docs);
-        return data
+        try {
+            const res = await axios.get(`${API}/get/articel`);
+            return res.data;
+        } catch (error) {
+            console.log("Error while getting data for getArticle::",error.data.message);
+            return [];
+        }
     }
 
     const makeDeal = async(id,data)=>{
@@ -189,7 +207,7 @@ export function UserAuthContextProvider({children}){
         return data
     }
    
-   return <userAuthContext.Provider value={{user,setUser,signUp,logIn,addCrop,getCrop,cropdata,addCropMarket,getCropMarket,cropMarketData,updateCropMarket,deleteCropMarket,addFertilizerMarket,getFertilizerMarket,deleteFertilizerMarket,updateFertilizerMarket,makeDeal,buyFertilizer,getCropTransaction,getFertilizerTransaction,addScheme,getScheme,addArticle,getArticle,addNews,getNews,logout,deletePendingcrop}}>{children}</userAuthContext.Provider>
+   return <userAuthContext.Provider value={{user,setUser,signUp,logIn,addCrop,getCrop,cropdata,addCropMarket,getCropMarket,cropMarketData,updateCropMarket,deleteCropMarket,addFertilizerMarket,getFertilizerMarket,deleteFertilizerMarket,updateFertilizerMarket,makeDeal,buyFertilizer,getCropTransaction,getFertilizerTransaction,addScheme,getScheme,addArticle,getArticle,addNews,getNews,logout,deletePendingcrop,getCropByname}}>{children}</userAuthContext.Provider>
 }
 
 

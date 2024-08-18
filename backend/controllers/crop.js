@@ -15,7 +15,6 @@ exports.addCrop = async(req,res) =>{
 exports.getAllCrop = async(req,res) =>{
     try {
     const crops = await Crop.find({});
-    console.log('All crops:', crops);
     return res.json(crops);
     } catch (error) {
     return res.status(400).json({
@@ -23,3 +22,20 @@ exports.getAllCrop = async(req,res) =>{
           });       
     }
 }
+
+exports.getCropByName = async (req, res) => {
+  const { cropname } = req.params; // Extract cropname from request parameters
+  try {
+      const crop = await Crop.findOne({ cropname: cropname }); // Find crop by cropname
+      if (!crop) {
+          return res.status(404).json({
+              message: 'Crop not found',
+          });
+      }
+      return res.json(crop); // Return the found crop
+  } catch (error) {
+      return res.status(500).json({
+          err: error.message,
+      });
+  }
+};
