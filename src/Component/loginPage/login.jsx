@@ -56,10 +56,11 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const a=await logIn(email, values.password);
-      console.log("login::",a);
-      if(!a?.user?.id){
-        setError(a.message)
+      const user=await logIn(email, values.password);
+      console.log("user::",user);
+      
+      if(!user?.id){
+        setError(user.message)
         setErrorDisplay(true)
         navigate("/login");
       }
@@ -113,6 +114,7 @@ export default function Login() {
                   <Input
                     type={values.showPassword ? "text" : "password"}
                     onChange={handlePasswordChange("password")}
+                    placeholder="Password"
                     value={values.password}
                     disableUnderline
                     endAdornment={

@@ -71,6 +71,7 @@ export default function Signup() {
         try {
           const res = await signUp(formValues);
           if (!res?.id) {
+            setErrorMessage(res.message)
             setErrorDisplay(true);
           } else {
             navigate("/CropInfo");
