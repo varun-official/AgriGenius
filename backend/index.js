@@ -13,7 +13,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/auth");
 const cropRoutes = require("./routes/crop");
 const storiesRoutes = require("./routes/stories");
-// const productRoutes = require("./routes/product");
+const schemeRoutes = require("./routes/scheme");
 // const orderRoutes = require("./routes/order");
 
 const dbConnect = async() =>{
@@ -42,7 +42,7 @@ app.use(cors());
 app.use("/api", authRoutes);
 app.use("/api", cropRoutes);
 app.use("/api", storiesRoutes);
-// app.use("/api", productRoutes);
+app.use("/api", schemeRoutes);
 // app.use("/api", orderRoutes);
 
 //PORT
